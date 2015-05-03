@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/itemText"
+        android:layout_alignParentLeft="true"
+        android:textColor="#000000"
+        android:layout_toLeftOf="@+id/timeStampText"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TIME"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentRight="true"
+        android:id="@+id/timeStampText"
+        android:layout_weight="1"
+        android:padding="3dp"
+        android:background="#78030307" />
+
+</RelativeLayout>
