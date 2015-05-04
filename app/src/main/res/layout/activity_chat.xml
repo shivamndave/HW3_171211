@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
+    android:background="#ffa0ffa8"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -11,34 +11,34 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/chatListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:paddingBottom="5dp" />
 
     <LinearLayout
-        android:id="@+id/inputLayout"
+        android:id="@+id/chatInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-100dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/refreshbutton"
+            android:id="@+id/chatRefreshbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="clickRefreshButton"
             android:text="@string/refresh_msg" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/chatEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="90dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/chatPostButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-90dp"
@@ -49,16 +49,32 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/currentlocview"
+        android:id="@+id/chatCurrentlocview"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/editText"
         android:gravity="center_horizontal"
         android:textColor="#000000" />
 
-    <ProgressBar
-        android:id="@+id/loadingNotif"
+    <LinearLayout
+        android:id="@+id/chatBottomLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="-10dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="-10dp">
+
+        <Button
+            android:id="@+id/chatBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="5dp"
+            android:text="@string/chat_back" />
+
+        <ProgressBar
+            android:id="@+id/chatLoadingNotif"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 </LinearLayout>

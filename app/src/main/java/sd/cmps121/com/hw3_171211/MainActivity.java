@@ -1,6 +1,8 @@
 package sd.cmps121.com.hw3_171211;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
@@ -37,7 +39,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     Location lastLocation;
 
@@ -46,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
 
     protected ProgressBar spinNtf;
 
-    private static final String LOG_TAG = "lclicker";
+    private static final String LOG_TAG = "MainActivity";
 
     // This is an id for my app, to keep the key space separate from other apps.
 
@@ -112,10 +114,8 @@ public class MainActivity extends ActionBarActivity {
             newView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String s = v.getTag().toString();
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, s, duration);
-                    toast.show();
+                    Intent chatActivity = new Intent(MainActivity.this, ChatActivity.class);
+                    startActivity(chatActivity);
                 }
             });
 
