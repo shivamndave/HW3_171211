@@ -28,7 +28,7 @@
             android:id="@+id/chatRefreshbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="clickRefreshButton"
+            android:onClick="clickChatRefreshButton"
             android:text="@string/refresh_msg" />
 
         <EditText
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-90dp"
-            android:onClick="clickButton"
+            android:onClick="clickChatButton"
             android:text="@string/post_msg" />
 
 
@@ -69,7 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="5dp"
-            android:text="@string/chat_back" />
+            android:text="@string/chat_back"
+            android:onClick="clickChatBackButton"/>
 
         <ProgressBar
             android:id="@+id/chatLoadingNotif"

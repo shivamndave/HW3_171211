@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
     // This is an id for my app, to keep the key space separate from other apps.
 
-    private static final String SERVER_URL_PREFIX = "https://luca-teaching.appspot.com/store/default/";
+    private static final String SERVER_URL_PREFIX = "https://hw3n-dot-luca-teaching.appspot.com/store/default/";
 
     // To remember the post we received.
     public static final String PREF_POSTS = "pref_posts";
@@ -66,6 +66,9 @@ public class MainActivity extends Activity {
 
         public String textLabel;
         public String timeLabel;
+        public String userIdLabel;
+        public boolean converseLabel;
+
     }
 
 
@@ -109,13 +112,22 @@ public class MainActivity extends Activity {
             String parsedTs = parseTs(w.timeLabel);
             ts.setText(parsedTs);
 
+
             // Set a listener for the whole list item.
             newView.setTag(w.textLabel);
+            final String userConvId = w.userIdLabel;
             newView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent chatActivity = new Intent(MainActivity.this, ChatActivity.class);
-                    startActivity(chatActivity);
+                     if (!(_appInfo.userid).equals(userConvId)) {
+                        Intent chatActivity = new Intent(MainActivity.this, ChatActivity.class);
+                        chatActivity.putExtra("dest", userConvId);
+                        startActivity(chatActivity);
+                    } else {
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, "You posted this message", duration);
+                        toast.show();
+                    }
                 }
             });
 
@@ -142,6 +154,7 @@ public class MainActivity extends Activity {
     }
 
     private MyAdapter aa;
+    private AppInfo _appInfo;
 
 
     // Also *note* the spinNtf is first called as gone
@@ -155,6 +168,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         spinNtf = (ProgressBar) findViewById(R.id.loadingNotif);
         spinNtf.setVisibility(View.GONE);
+        _appInfo = AppInfo.getInstance(this);
+        Log.e(LOG_TAG, _appInfo.userid);
         createAdapter();
     }
 
@@ -170,6 +185,8 @@ public class MainActivity extends Activity {
                 ListElement ael = new ListElement();
                 ael.textLabel = ml.messages[i].msg;
                 ael.timeLabel = ml.messages[i].ts;
+                ael.userIdLabel = ml.messages[i].userid;
+                ael.converseLabel = ml.messages[i].conversation;
                 aList.add(ael);
             }
         }
@@ -316,6 +333,7 @@ public class MainActivity extends Activity {
         tempHash.put("lat", locationLat.toString());
         tempHash.put("lng", locationLong.toString());
         tempHash.put("msgid", reallyComputeHash(msg));
+        tempHash.put("userid", _appInfo.userid);
 
 
         myCallSpec.setParams(tempHash);
@@ -387,6 +405,8 @@ public class MainActivity extends Activity {
             ListElement ael = new ListElement();
             ael.textLabel = ml.messages[i].msg;
             ael.timeLabel = ml.messages[i].ts;
+            ael.userIdLabel = ml.messages[i].userid;
+            ael.converseLabel = ml.messages[i].conversation;
             aList.add(ael);
         }
         aa.notifyDataSetChanged();
