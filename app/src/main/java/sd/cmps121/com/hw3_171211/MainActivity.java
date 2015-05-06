@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
             String parsedTs = parseTs(w.timeLabel);
             ts.setText(parsedTs);
 
-            if (w.converseLabel){
+            if (w.converseLabel) {
                 iv.setVisibility(View.VISIBLE);
             } else {
                 iv.setVisibility(View.INVISIBLE);
@@ -126,7 +126,7 @@ public class MainActivity extends Activity {
             newView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                     if (!(_appInfo.userid).equals(userConvId)) {
+                    if (!(_appInfo.userid).equals(userConvId)) {
                         Intent chatActivity = new Intent(MainActivity.this, ChatActivity.class);
                         chatActivity.putExtra("dest", userConvId);
                         startActivity(chatActivity);

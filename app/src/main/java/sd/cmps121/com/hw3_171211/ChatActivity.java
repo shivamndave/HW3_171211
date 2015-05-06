@@ -257,16 +257,18 @@ public class ChatActivity extends Activity {
         @Override
         public void onLocationChanged(Location location) {
             spinNtf.setVisibility(View.GONE);
-            TextView currentLocationTextView = (TextView) findViewById(R.id.chatCurrentlocview);
+            TextView currentLngTextView = (TextView) findViewById(R.id.chatCurrentLatview);
+            TextView currentLatTextView = (TextView) findViewById(R.id.chatCurrentLngview);
 
             lastLocation = location;
             locationLat = location.getLatitude();
             locationLong = location.getLongitude();
 
-            String Text = "Latitude: " + locationLat + " Longitude: " +
-                    locationLong;
+            String lng = "Longitude: " + locationLong;
+            String lat = "Latitude: " + locationLat;
 
-            currentLocationTextView.setText(Text);
+            currentLngTextView.setText(lng);
+            currentLatTextView.setText(lat);
         }
 
         @Override
@@ -375,6 +377,7 @@ public class ChatActivity extends Activity {
                 editor.putString(PREF_POSTS, result);
                 editor.commit();
             }
+            spinNtf.setVisibility(View.GONE);
         }
     }
 
@@ -392,6 +395,7 @@ public class ChatActivity extends Activity {
             aList.add(ael);
         }
         aa.notifyDataSetChanged();
+        spinNtf.setVisibility(View.GONE);
     }
 
 
