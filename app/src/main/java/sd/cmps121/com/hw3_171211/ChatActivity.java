@@ -215,7 +215,6 @@ public class ChatActivity extends Activity {
         HashMap<String, String> tempHash = new HashMap<String, String>();
         tempHash.put("lat", locationLat.toString());
         tempHash.put("lng", locationLong.toString());
-        tempHash.put("conversation", String.valueOf(true));
         tempHash.put("userid", _appInfo.userid);
         tempHash.put("dest", _destUserId);
 

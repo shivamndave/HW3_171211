@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -112,6 +112,11 @@ public class MainActivity extends Activity {
             String parsedTs = parseTs(w.timeLabel);
             ts.setText(parsedTs);
 
+            if (w.converseLabel){
+
+            } else {
+
+            }
 
             // Set a listener for the whole list item.
             newView.setTag(w.textLabel);
@@ -182,6 +187,7 @@ public class MainActivity extends Activity {
         if (result != null) {
             // Fills aList, so we can fill the listView.
             for (int i = 0; i < ml.messages.length; i++) {
+                Log.e(LOG_TAG, ml.messages.toString());
                 ListElement ael = new ListElement();
                 ael.textLabel = ml.messages[i].msg;
                 ael.timeLabel = ml.messages[i].ts;
@@ -211,8 +217,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        String result = getRecentMessages();
         spinNtf.setVisibility(View.GONE);
+        String result = getRecentMessages();
         if (result != null) {
             displayResult(result);
         }
