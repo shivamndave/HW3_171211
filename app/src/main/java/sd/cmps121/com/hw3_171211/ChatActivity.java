@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -100,6 +101,8 @@ public class ChatActivity extends Activity {
             // Fills in the view.
             TextView tv = (TextView) newView.findViewById(R.id.itemText);
             TextView ts = (TextView) newView.findViewById(R.id.timeStampText);
+            ImageView iv = (ImageView) newView.findViewById(R.id.convoIndic);
+            iv.setVisibility(View.INVISIBLE);
 
             tv.setText(w.textLabel);
 
@@ -108,7 +111,6 @@ public class ChatActivity extends Activity {
 
             // Set a listener for the whole list item.
             newView.setTag(w.textLabel);
-
 
             return newView;
         }

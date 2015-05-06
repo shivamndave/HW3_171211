@@ -12,8 +12,8 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/timeStampText"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:text="New Text"
-        android:layout_marginRight="100dp"
         android:textColor="#000000" />
 
     <!-- Author of the icon: http://www.flaticon.com/authors/freepik-->
@@ -23,7 +23,8 @@
         android:layout_height="25dp"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/timeStampText"
-        android:src="@drawable/icon_privmessage"/>
+        android:gravity="center_vertical"
+        android:src="@drawable/icon_privmessage" />
 
     <TextView
         android:id="@+id/timeStampText"
@@ -32,6 +33,7 @@
         android:layout_alignParentRight="true"
         android:layout_weight="1"
         android:background="#78030307"
+        android:gravity="center_vertical"
         android:padding="3dp"
         android:text="TIME"
         android:textColor="#FFFFFF" />

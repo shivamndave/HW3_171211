@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -106,6 +107,7 @@ public class MainActivity extends Activity {
             // Fills in the view.
             TextView tv = (TextView) newView.findViewById(R.id.itemText);
             TextView ts = (TextView) newView.findViewById(R.id.timeStampText);
+            ImageView iv = (ImageView) newView.findViewById(R.id.convoIndic);
 
             tv.setText(w.textLabel);
 
@@ -113,9 +115,9 @@ public class MainActivity extends Activity {
             ts.setText(parsedTs);
 
             if (w.converseLabel){
-
+                iv.setVisibility(View.VISIBLE);
             } else {
-
+                iv.setVisibility(View.INVISIBLE);
             }
 
             // Set a listener for the whole list item.
@@ -249,6 +251,7 @@ public class MainActivity extends Activity {
         HashMap<String, String> tempHash = new HashMap<String, String>();
         tempHash.put("lat", locationLat.toString());
         tempHash.put("lng", locationLong.toString());
+        tempHash.put("userid", _appInfo.userid);
 
         myCallSpec.setParams(tempHash);
         if (uploader != null) {
