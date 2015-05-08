@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     protected Double locationLat;
     protected Double locationLong;
 
-    protected ProgressBar spinNtf;
+    public ProgressBar spinNtf;
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -114,6 +114,8 @@ public class MainActivity extends Activity {
             String parsedTs = parseTs(w.timeLabel);
             ts.setText(parsedTs);
 
+            // HW3: For conversation posts, a notification is displayed showing you have
+            // engaged in a private conversation with a person
             if (w.converseLabel) {
                 iv.setVisibility(View.VISIBLE);
             } else {
@@ -121,6 +123,10 @@ public class MainActivity extends Activity {
             }
 
             // Set a listener for the whole list item.
+
+            // HW3: Adds a condition if this post is posted by another user, you can click to
+            // engage in a prvate conversation with them. If you click your post, it tells you
+            // that you posted it
             newView.setTag(w.textLabel);
             final String userConvId = w.userIdLabel;
             newView.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +187,10 @@ public class MainActivity extends Activity {
     }
 
     // First initialization of the adapter when starting the app
+
+    // HW3: Added a check here if its not null it will populate the fields
+    // and added the userIdlabel and converse labels here to be able to track
+    // conversations
     private void createAdapter() {
         Gson gson = new Gson();
         String result = getRecentMessages();
@@ -209,7 +219,6 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
         String result = getRecentMessages();
-        spinNtf.setVisibility(View.GONE);
         if (result != null) {
             displayResult(result);
         }
@@ -219,7 +228,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        spinNtf.setVisibility(View.GONE);
         String result = getRecentMessages();
         if (result != null) {
             displayResult(result);
@@ -228,18 +236,36 @@ public class MainActivity extends Activity {
 
     // This function gets the location info, it is called whenever we want to
     // get location information and store the longitude/latitude information
+
+    //HW3: Added a check if you have location services off, it wont crash,
+    // but will just set you at (0,0) and tell you that you are there
     private void getLocationInfo() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         lastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        lastLocation.getLatitude();
-        lastLocation.getLongitude();
-        locationLat = lastLocation.getLatitude();
-        locationLong = lastLocation.getLongitude();
+
+        if(lastLocation == null) {
+            locationLat = 0.0;
+            locationLong = 0.0;
+
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(this, "Location services are not working or off.", duration);
+            toast.show();
+            Log.i(LOG_TAG, "Location services not working.");
+        } else {
+
+            lastLocation.getLatitude();
+            lastLocation.getLongitude();
+
+            locationLat = lastLocation.getLatitude();
+            locationLong = lastLocation.getLongitude();
+        }
     }
 
     // Function that gets recent messages, called in numerous functions to have calls to the server
+
+    //HW3: userId is also gotten along with location
     private String getRecentMessages() {
         getLocationInfo();
         PostMessageSpec myCallSpec = new PostMessageSpec();
@@ -273,7 +299,6 @@ public class MainActivity extends Activity {
         if (result != null) {
             displayResult(result);
         }
-        spinNtf.setVisibility(View.GONE);
         // Stops the location updates.
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
@@ -289,7 +314,6 @@ public class MainActivity extends Activity {
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            spinNtf.setVisibility(View.GONE);
             TextView currentLocationTextView = (TextView) findViewById(R.id.currentlocview);
 
             lastLocation = location;
@@ -318,6 +342,9 @@ public class MainActivity extends Activity {
     // Post button that gets the text from the edittext (then clears it),
     // packages it into a PostMessageSpec with a HashMap, and then executes
     // it using the uploader
+
+    // HW3: Added the message id and user id as things uploaded,
+    // to allow for support for private messaging
     public void clickButton(View v) {
         spinNtf.setVisibility(View.VISIBLE);
         if (lastLocation == null) {
@@ -382,6 +409,8 @@ public class MainActivity extends Activity {
 
     // This class is used to do the HTTP call, and it specifies how to use the result.
     // Also shows error message when server calls fail
+
+    // HW3: Also finishes spinner progress bar here now, after server is called
     class PostMessageSpec extends ServerCallSpec {
         @Override
         public void useResult(Context context, String result) {
@@ -400,11 +429,14 @@ public class MainActivity extends Activity {
                 editor.putString(PREF_POSTS, result);
                 editor.commit();
             }
+            spinNtf.setVisibility(View.GONE);
         }
     }
 
     // Used to get the message list, get the info needed (message & timestamp), then notifies
     // the adapter that this change has been made
+
+    //HW3: Same items displayed, but now gets the userId and conversation boolean
     private void displayResult(String result) {
         Gson gson = new Gson();
         MessageList ml = gson.fromJson(result, MessageList.class);

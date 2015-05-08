@@ -70,6 +70,9 @@ public class ChatActivity extends Activity {
     private ArrayList<ListElement> aList;
 
     // Array Adapter used to show the list of incoming messages
+
+    // HW3: Like the MainActivity, but only displays conversations
+    // from the user chosen
     private class MyAdapter extends ArrayAdapter<ListElement> {
 
         int resource;
@@ -145,6 +148,7 @@ public class ChatActivity extends Activity {
             _destUserId = bundle.getString("dest");
         }
         spinNtf = (ProgressBar) findViewById(R.id.chatLoadingNotif);
+        spinNtf.setVisibility(View.GONE);
         _appInfo = AppInfo.getInstance(this);
         createAdapter();
     }
@@ -175,7 +179,6 @@ public class ChatActivity extends Activity {
     protected void onStart() {
         super.onStart();
         String result = getRecentMessages();
-        spinNtf.setVisibility(View.GONE);
         if (result != null) {
             displayResult(result);
         }
@@ -186,7 +189,6 @@ public class ChatActivity extends Activity {
     protected void onResume() {
         super.onResume();
         String result = getRecentMessages();
-        spinNtf.setVisibility(View.GONE);
         if (result != null) {
             displayResult(result);
         }
@@ -206,6 +208,8 @@ public class ChatActivity extends Activity {
     }
 
     // Function that gets recent messages, called in numerous functions to have calls to the server
+
+    // HW3: Gets the userID so correct private messages are displayed
     private String getRecentMessages() {
         getLocationInfo();
         PostMessageSpec myCallSpec = new PostMessageSpec();
@@ -240,7 +244,6 @@ public class ChatActivity extends Activity {
         if (result != null) {
             displayResult(result);
         }
-        spinNtf.setVisibility(View.GONE);
         // Stops the location updates.
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
@@ -256,7 +259,6 @@ public class ChatActivity extends Activity {
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            spinNtf.setVisibility(View.GONE);
             TextView currentLngTextView = (TextView) findViewById(R.id.chatCurrentLatview);
             TextView currentLatTextView = (TextView) findViewById(R.id.chatCurrentLngview);
 
@@ -287,6 +289,8 @@ public class ChatActivity extends Activity {
     // Post button that gets the text from the edittext (then clears it),
     // packages it into a PostMessageSpec with a HashMap, and then executes
     // it using the uploader
+
+    // HW3: Posts private message to the user chosen
     public void clickChatButton(View v) {
         spinNtf.setVisibility(View.VISIBLE);
         if (lastLocation == null) {
@@ -334,7 +338,7 @@ public class ChatActivity extends Activity {
         }
     }
 
-    // Finishes current activity, meaning it goes to the next one
+    // HW3: Finishes current activity, meaning it goes to the next one
     // on the activity stack. That next one is the previous activity
     // MainActivity that the user came from
     public void clickChatBackButton(View v) {
@@ -359,6 +363,8 @@ public class ChatActivity extends Activity {
 
     // This class is used to do the HTTP call, and it specifies how to use the result.
     // Also shows error message when server calls fail
+
+    // HW3: Also finishes spinner progress bar here now, after server is called
     class PostMessageSpec extends ServerCallSpec {
         @Override
         public void useResult(Context context, String result) {
@@ -395,7 +401,6 @@ public class ChatActivity extends Activity {
             aList.add(ael);
         }
         aa.notifyDataSetChanged();
-        spinNtf.setVisibility(View.GONE);
     }
 
 

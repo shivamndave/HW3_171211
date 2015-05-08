@@ -4,6 +4,9 @@ package sd.cmps121.com.hw3_171211;
 // that holds all the info
 // from a server call to
 // parse it into JSON
+
+// HW3: Cleaned it up and
+// added a conversation boolean
 public class MsgInfo {
     public MsgInfo() {}
 
